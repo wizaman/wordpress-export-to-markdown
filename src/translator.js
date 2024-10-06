@@ -125,6 +125,9 @@ function getPostContent(postData, turndownService, config) {
 	// unified relative protocol to HTTPS
 	content = content.replace('](//', '](https://');
 
+	// convert /images links to absolute paths
+	content = content.replace('](images/', '](/images/');
+
 	return content;
 }
 
