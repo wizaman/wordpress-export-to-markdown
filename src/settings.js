@@ -3,11 +3,12 @@
 // field by providing an alias after a ':'. For example, 'date:created' will include 'date' in
 // frontmatter, but renamed to 'created'.
 exports.frontmatter_fields = [
+	'id:slug',
 	'title',
-	'date',
+	'date:pubDate',
 	'categories',
 	'tags',
-	'coverImage'
+	'coverImage:heroImage'
 ];
 
 // Time in ms to wait between requesting image files. Increase this if you see timeouts or
