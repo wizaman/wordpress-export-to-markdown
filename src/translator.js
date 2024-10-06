@@ -123,10 +123,10 @@ function getPostContent(postData, turndownService, config) {
 	content = content.replace(/(-|\d+\.) +/g, '$1 ');
 
 	// unified relative protocol to HTTPS
-	content = content.replace('](//', '](https://');
+	content = content.replaceAll('](//', '](https://');
 
 	// convert /images links to absolute paths
-	content = content.replace('](images/', '](/images/');
+	content = content.replaceAll('](images/', '](/images/');
 
 	return content;
 }
