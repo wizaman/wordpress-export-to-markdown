@@ -122,6 +122,9 @@ function getPostContent(postData, turndownService, config) {
 	// clean up extra spaces in list items
 	content = content.replace(/(-|\d+\.) +/g, '$1 ');
 
+	// unified relative protocol to HTTPS
+	content = content.replace('](//', '](https://');
+
 	return content;
 }
 
