@@ -106,6 +106,7 @@ function getPostContent(postData, turndownService, config) {
 		// writeImageFile() will save all content images to a relative /images
 		// folder so update references in post content to match
 		content = content.replace(/(<img[^>]*src=").*?([^/"]+\.(?:gif|jpe?g|png|webp))("[^>]*>)/gi, '$1./images/$2$3');
+		content = content.replace(/(<a[^>]*href=").*?([^/"]+\.(?:gif|jpe?g|png|webp))("[^>]*>)/gi, '$1./images/$2$3');
 	}
 
 	// preserve "more" separator, max one per post, optionally with custom label
