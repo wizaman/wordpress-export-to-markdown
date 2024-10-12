@@ -30,7 +30,7 @@ exports.custom_date_formatting = '';
 
 // Specify the timezone used for post dates. See available zone values and examples here:
 // https://moment.github.io/luxon/#/zones?id=specifying-a-zone.
-exports.custom_date_timezone = 'utc';
+exports.custom_date_timezone = 'Asia/Tokyo';
 
 // Categories to be excluded from post frontmatter. This does not filter out posts themselves,
 // just the categories listed in their frontmatter.
