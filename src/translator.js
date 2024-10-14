@@ -103,6 +103,8 @@ function initTurndownService() {
 		}
 	});
 
+	turndownService.keep(['object']);
+
 	return turndownService;
 }
 
