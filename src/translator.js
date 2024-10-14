@@ -134,6 +134,9 @@ function getPostContent(postData, turndownService, config) {
 
 	content = preprocessLineBreaks(content);
 
+	// convert [amazonjs] shortcodes into links
+	content = content.replace(/\[amazonjs asin="(.*?)" locale="JP" title="(.*?)"\]/gi, '<a href="https://www.amazon.co.jp/dp/$1">$2</a>');
+
 	if (config.saveScrapedImages) {
 		// writeImageFile() will save all content images to a relative /images
 		// folder so update references in post content to match
