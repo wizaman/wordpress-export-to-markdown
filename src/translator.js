@@ -130,7 +130,9 @@ function getPostContent(postData, turndownService, config) {
 	// insert an empty div element between double line breaks
 	// this nifty trick causes turndown to keep adjacent paragraphs separated
 	// without mucking up content inside of other elements (like <code> blocks)
-	content = content.replace(/(\r?\n){2}/g, '\n<div></div>\n');
+	// content = content.replace(/(\r?\n){2}/g, '\n<div></div>\n');
+
+	content = preprocessLineBreaks(content);
 
 	if (config.saveScrapedImages) {
 		// writeImageFile() will save all content images to a relative /images
@@ -166,6 +168,57 @@ function getPostContent(postData, turndownService, config) {
 	content = content.replace(/\[!\[(.*?)\]\((.*?)\)\]\((.*?)\)/gi, '![$1]($3)');
 
 	return content;
+}
+
+function preprocessLineBreaks(content) {
+	const result = [];
+	let last = undefined;
+	let emptyLineCount = 0;
+	for (const line of content.split('\n')) {
+		if (last === undefined) {
+			last = line;
+			continue;
+		}
+
+		let processed = false;
+
+		const isEmptyLine = !!line.match(/^\s*$/g);
+		const lastEmptyLineCount = emptyLineCount;
+		if (isEmptyLine) {
+			emptyLineCount++;
+		}
+		else {
+			emptyLineCount = 0;
+		}
+
+		if (!isEmptyLine) {
+			// not begins with a tag
+			if (lastEmptyLineCount === 0 && !line.match(/^(\s*<)/g)) {
+				// not ends with a tag
+				if (last !== '' && !last.match(/(table|thead|tbody|tr|td|ul|ol|li|blockquote|iframe)\s*?\/?>$/)) {
+					// single line break
+					result.push(last + '<br>');
+					processed = true;
+				}
+			}
+			else if (lastEmptyLineCount >= 1) {
+				result.push('<div></div>');
+				processed = true;
+			}
+		}
+
+		if (!processed) {
+			result.push(last);
+		}
+
+		last = line;
+	}
+
+	if (last !== undefined) {
+		result.push(last);
+	}
+
+	return result.join('\n');
 }
 
 exports.initTurndownService = initTurndownService;
