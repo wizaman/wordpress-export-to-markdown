@@ -103,6 +103,14 @@ function initTurndownService() {
 		}
 	});
 
+	// preserve <a> for excludes attributes other than 'href'
+	turndownService.addRule('a', {
+		filter: 'a',
+		replacement: (content, node) => {
+			return `[${content}](${node.getAttribute('href')})`;
+		}
+	});
+	
 	turndownService.keep(['object']);
 
 	return turndownService;
