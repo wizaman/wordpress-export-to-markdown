@@ -103,11 +103,19 @@ function initTurndownService() {
 		}
 	});
 
-	// preserve <a> for excludes attributes other than 'href'
+	// treat <a> to exclude attributes other than 'href'
 	turndownService.addRule('a', {
 		filter: 'a',
 		replacement: (content, node) => {
 			return `[${content}](${node.getAttribute('href')})`;
+		}
+	});
+
+	// treat strikethrough
+	turndownService.addRule('del', {
+		filter: node => ['STRIKE', 'S', 'DEL'].includes(node.nodeName),
+		replacement: (content, node) => {
+			return `~~${content}~~`;
 		}
 	});
 	
