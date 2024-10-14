@@ -195,9 +195,9 @@ function preprocessLineBreaks(content) {
 		}
 
 		if (!isEmptyLine) {
-			// not begins with a tag
-			if (lastEmptyLineCount === 0 && !line.match(/^(\s*<)/g)) {
-				// not ends with a tag
+			// not begins with a block tag
+			if (lastEmptyLineCount === 0 && !line.match(/^(\s*<(table|thead|tbody|tr|td|ul|ol|li|blockquote|iframe))/g)) {
+				// not ends with a block tag
 				if (last !== '' && !last.match(/(table|thead|tbody|tr|td|ul|ol|li|blockquote|iframe)\s*?\/?>$/)) {
 					// single line break
 					result.push(last + '<br>');
