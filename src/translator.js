@@ -91,6 +91,18 @@ function initTurndownService() {
 		}
 	});
 
+	// convert <pre><code> into a code block with language when appropriate
+	turndownService.addRule('pre-code', {
+		filter: node => {
+			return node.nodeName === 'PRE' && node.querySelector('code');
+		},
+		replacement: (content, node) => {
+			const code = node.querySelector('code');
+			const language = (code.getAttribute('class') || '').replace('language-', '').replace('nohighlight', '');
+			return '\n\n```' + language + '\n' + node.textContent.trim() + '\n```\n\n';
+		}
+	});
+
 	return turndownService;
 }
 
