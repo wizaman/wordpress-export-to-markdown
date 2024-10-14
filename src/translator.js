@@ -135,6 +135,11 @@ function getPostContent(postData, turndownService, config) {
 	// clean up extra spaces in list items
 	content = content.replace(/(-|\d+\.) +/g, '$1 ');
 
+	// trim trailing spaces for line breaks
+	content = content.replace(/^\s+$/gm, ''); // space only lines
+	content = content.replace(/^([^>][^ ]*) +$/gm, '$1'); // not blockquote lines
+	content = content.replace(/^(>[^ ]*) +$/gm, '$1 '); // blockquote lines
+
 	// unified relative protocol to HTTPS
 	content = content.replaceAll('](//', '](https://');
 
